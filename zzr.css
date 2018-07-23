@@ -11,7 +11,7 @@ body > * {
     padding: 20px;
     margin: 20px auto;
     background: white;
-    text-align: justify;
+    text-align: left;
 }
 
 a {
@@ -58,6 +58,7 @@ ul {
 
 li {
     padding:  5px;
+	text-align: left;
 }
 
 td { padding: 0px 5px 0px 0px; }
