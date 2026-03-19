@@ -137,6 +137,11 @@ img {
   font: 700 clamp(2.2rem, 5vw, 4.2rem)/1.05 Georgia, "Times New Roman", serif;
 }
 
+.hero h1 {
+  max-width: 14ch;
+  letter-spacing: -0.02em;
+}
+
 .section-block h2,
 .sidebar-card h2 {
   font-size: clamp(1.65rem, 3vw, 2.35rem);
@@ -157,6 +162,10 @@ img {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 28px;
+}
+
+.hero .lede {
+  max-width: 38rem;
 }
 
 .primary-link,
