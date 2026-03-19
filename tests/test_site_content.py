@@ -70,6 +70,7 @@ class SiteStructureTests(unittest.TestCase):
             "Document-Level Machine Translation with Large Language Models",
         ]:
             self.assertIn(title, html)
+        self.assertIn("NeurIPS 2025 · 2025", html)
 
     def test_publications_page_contains_rich_entry_metadata(self) -> None:
         html = read_text("publications.html")

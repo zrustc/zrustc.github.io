@@ -1,0 +1,145 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+% !Mode:: "TeX:UTF-8"
+
+\documentclass{resume}
+\usepackage{zh_CN-Adobefonts_external} % Simplified Chinese Support using external fonts (./fonts/zh_CN-Adobe/)
+%\usepackage{zh_CN-Adobefonts_internal} % Simplified Chinese Support using system fonts
+\usepackage{linespacing_fix} % disable extra space before next section
+\usepackage{amsmath}
+\usepackage{cite}
+
+\begin{document}
+\pagenumbering{gobble} % suppress displaying page number
+
+\name{张志锐(ZHIRUI ZHANG)}
+% \name{越空}
+
+\basicInfo{
+  \email{zrustc11@gmail.com} \textperiodcentered\ 
+  \phone{(+86) 188-1063-6928} \textperiodcentered\ 
+  \text{\faFilesO\ https://zrustc.github.io/}
+  }
+
+\section{\faGraduationCap\  个人简介}
+
+\textit{聚焦大模型后训练、推理模型以及多语言/多模态能力构建，兼具基础模型研究与业务落地经验；曾参与近万亿级MoE基础大模型预训练与后训练，主导通用后训练、推理模型、翻译与多语言能力建设。中国科学技术大学博士，MSRA-USTC联合培养；发表50+篇论文，研究覆盖大模型、机器翻译、语音翻译与对话系统。近年的工作重点是在终端与云侧场景中打造可落地、可迭代的大模型能力。}
+
+% \datedsubsection{\textbf{中国科学技术大学}}{2014 -- 2019}
+% \textit{中国科学技术大学-微软亚洲研究院联合培养博士}\ \ 计算机科学与技术 \\
+% \textit{导师: 沈向洋、陈恩红 \ \ 副导师：李沐} \\
+% \textit{研究方向：深度学习、自然语言处理、机器翻译、自然语言生成} \\
+% \text{Google Scholar Citations: $2400^{+}$,\ h-index: 20+}
+% \datedsubsection{\textbf{中国科学技术大学}}{2010 -- 2014}
+% \textit{本科}\ \ 计算机科学与技术
+
+\section{\faUsers\ 主要经历}
+
+\datedsubsection{\textbf{IDEA数字经济研究院}，深圳}{2025.12 -- 至今}
+\role{基础软件实验室，AI技术顾问 \& 创业合伙人}{}
+\text{参与 MoonBit 编程语言的模型与工具全栈体系建设，探索更可靠的代码智能}
+\begin{itemize}
+\item 参与为 MoonBit 打造模型+工具全栈体系，覆盖代码数据、模型能力、工具链与开发工作流协同；
+\item 提出 SWE-AGI Benchmark，从编程语言、可验证执行和代码证明视角探索更可靠的代码生成与软件工程智能体；
+\end{itemize}
+
+\datedsubsection{\textbf{华为}，深圳/东莞}{2024.3 -- 2025.9}
+\role{终端-小艺业务部，技术专家A (20级)，从零组建10人+团队，1次A绩效}{}
+\text{负责小艺大模型通用后训练、推理模型以及大模型场景落地}
+\begin{itemize}
+\item 负责小艺通用后训练体系建设，牵引SFT3.0与数据/流程迭代；基于Qwen2.5-7B的训练策略在知识、推理、数学、代码、工具调用等主流评测上全面超过Qwen2.5-7B-Instruct，AlpacaEval 2.0和Arena-Hard提升10\%+，相关策略迁移到盘古38B/135B-V3后带来10\%+相对分位值提升；
+\item 负责推理模型与AI教育场景落地，推动快慢思考融合、可控思考长度、置信度驱动RL和Agentic RL等方向验证；支撑小艺深度解题智能体落地，并在2025电信打榜中获得AI学习能力第一；
+\item 负责多语言与多模态能力建设；推动盘古多语言模型能力提升，通话翻译场景中英双向平均提升7个COMET值，体感优于三星手机翻译30\%+；基于Qwen3-8B构建多模态后训练方案，通用能力持平或超过Qwen2.5-32B-VL；
+\item 支撑小艺对话Live态亮点特性发布上线；RL+GenRM策略将Live态对话满意度从3.35提升至4.15（+23\%）；完成基于大模型的Live2D数字人驱动方案探索；
+\end{itemize}
+
+\datedsubsection{\textbf{阶跃星辰}，北京}{2023.11 -- 2024.3}
+\text{算法专家，主要负责语言大模型预训练工作以及前沿技术探索}
+\begin{itemize}
+\item Step2近万亿参数MoE预训练项目核心成员，参与模型结构和训练策略验证；
+\item 主导FP8-LM在预训练和后训练阶段的探索与落地，并负责LongContext策略验证，支撑128K上下文能力落地；
+\end{itemize}
+
+\datedsubsection{\textbf{腾讯-AI Lab}，深圳}{2021.9 -- 2023.11}
+\role{高级研究员（T11），自然语言算法平台组，1次5星, 2次SEVP卓越个人}{}
+\text{主要负责腾讯翻译训练平台搭建、交互翻译模型建设、个性化机器翻译以及先进技术研究}
+\begin{itemize}
+  \item 负责腾讯翻译训练平台和自动化数据/训练链路建设，搭建交互翻译多合一模型，支撑商业化交付与团队协作；
+  \item 提出并落地个性化机器翻译核心策略SK-MT；相关研究发表于ICLR 2023，并成为线上能力建设的关键方案；
+  \item 推动多模态翻译研究，获得IWSLT 2023端到端语音到语音翻译子任务第一名；并参与混元大模型项目，负责多语言预训练数据清洗、翻译能力优化和RLHF调优；
+\end{itemize}
+
+\datedsubsection{\textbf{阿里巴巴-达摩院}，杭州}{2019.7 -- 2021.8}
+\role{阿里星，算法专家，语言技术实验室，1次375绩效}{}
+% {主管：陈博兴、谢军}
+\text{主要负责阿里翻译基础通用模型建设、语音翻译、对外商业化以及先进技术研究}
+\begin{itemize}
+  \item 负责阿里云通用翻译服务与商业化项目，完成自动化训练链路、通用模型优化、语向扩展（15->214）和线上解码加速（2-3x）；
+  \item 开展多语言机器翻译、预训练融合、语音翻译与领域自适应研究，持续提升线上模型和定制模型效果；
+  \item 受邀在DataFunTalk 2020分享“阿里多语言翻译模型的前沿探索及技术实践”；
+\end{itemize}
+
+\datedsubsection{\textbf{微软研究院}，北京/西雅图}{2015.7 -- 2019.6}
+\role{研究实习生，微软亚洲研究院自然语言计算组 / 微软雷德蒙德研究院Deep Learning Group}{}
+\textit{机器翻译、对话系统与自然语言生成相关技术研究}
+\begin{itemize}
+  \item 开展神经机器翻译、对话系统和文本生成研究，提出Iterative Back-Translation、Target-bidirectional Agreement、SMT as Posterior Regularization、Budgeted Policy Learning等方法；
+  \item 参与SmartFlow Toolkit、Writing Intelligence和Babel等内部项目，其中Babel项目推动中英新闻翻译达到人类可比水平；
+\end{itemize}
+
+\section{\faFilesO\ 代表论文（后训练 / 推理 / 代码智能 / 翻译）}
+
+\begin{enumerate}
+
+\item \normalsize \textbf{SWE-AGI: Benchmarking Specification-Driven Software Construction with MoonBit in the Era of Autonomous Agents}\\
+\small \textit{arXiv}'2026
+
+\item \normalsize \textbf{Is PRM Necessary? Problem-Solving RL Implicitly Induces PRM Capability in LLMs}\\
+\small \textit{NeurIPS}'2025
+
+\item \normalsize \textbf{Safe Delta: Consistently Preserving Safety when Fine-Tuning LLMs on Diverse Datasets}\\
+\small \textit{ICML}'2025
+
+\item \normalsize \textbf{Simple o3: Towards Interleaved Vision-Language Reasoning}\\
+\small \textit{arXiv}'2025
+
+\item \normalsize \textbf{Lost in the Source Language: How Large Language Models Evaluate the Quality of Machine Translation}\\
+\small \textit{ACL}'2024
+
+\item \normalsize \textbf{Fairness-guided Few-shot Prompting for Large Language Models}\\ 
+\small \textit{NeurIPS}'2023
+
+\item \normalsize \textbf{Document-Level Machine Translation with Large Language Models}\\ 
+\small \textit{EMNLP}'2023
+
+\item \normalsize \textbf{The \textsc{MineTrans} Systems for IWSLT 2023 Offline Speech Translation and Speech-to-Speech Translation Tasks}\\ 
+\small \textit{IWSLT}'2023
+
+\item \normalsize \textbf{Simple and Scalable Nearest Neighbor Machine Translation}\\
+\small \textit{ICLR}'2023
+
+\item \normalsize \textbf{Regularizing Neural Machine Translation by Target-bidirectional Agreement} \\
+\small \textit{AAAI}'2019
+
+\item \normalsize \textcolor{red}{\textbf{Achieving Human Parity on Automatic Chinese to English News Translation}} \\
+\small \textit{Technical Report}'2018
+
+\end{enumerate}
+
+\section{\faCogs\ 主要技能及学术服务}
+% increase linespacing [parsep=0.5ex]
+\begin{itemize}
+  \item 编程技能: Python/C++/C\#/Java/CUDA/Cudnn/Tensorflow/Pytorch
+  \item 学术服务: 担任多个NLP/ML会议与期刊长期审稿人，包括ACL、EMNLP、NAACL、AAAI、IJCAI、NeurIPS、ICML、ICLR，COLR等，担任过ACL领域主席;
+\end{itemize}
+
+\section{\faHeartO\ 主要获奖情况}
+\datedline{\textit{国家奖学金}}{2013}
+\datedline{\textit{谷歌奖学金}}{2013}
+\datedline{\textit{微软亚洲研究院实习生“明日之星”}}{2019}
+
+%% Reference
+%\newpage
+%\bibliographystyle{IEEETran}
+%\bibliography{mycite}
+\end{document}

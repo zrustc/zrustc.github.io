@@ -1,0 +1,216 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+% !Mode:: "TeX:UTF-8"
+
+\documentclass{resume}
+\usepackage{zh_CN-Adobefonts_external} % Simplified Chinese Support using external fonts (./fonts/zh_CN-Adobe/)
+%\usepackage{zh_CN-Adobefonts_internal} % Simplified Chinese Support using system fonts
+\usepackage{linespacing_fix} % disable extra space before next section
+\usepackage{cite}
+
+\begin{document}
+\pagenumbering{gobble} % suppress displaying page number
+
+\name{张志锐(ZHIRUI ZHANG)}
+
+\basicInfo{
+  \email{zrustc11@gmail.com} \textperiodcentered\ 
+  \phone{(+86) 188-106-36928} \textperiodcentered\ 
+  \text{\faFilesO\ https://zrustc.github.io/}
+  }
+
+\section{\faGraduationCap\  教育背景}
+\datedsubsection{\textbf{中国科学技术大学}}{2014 -- 2019}
+\textit{中国科学技术大学-微软亚洲研究院联合培养博士}\ \ 计算机科学与技术 \\
+\textit{导师: 沈向洋、陈恩红 \ \ 副导师：李沐} \\
+\textit{研究方向：自然语言处理、机器翻译、深度学习、机器学习} \\
+\text{Google Scholar Citations: $1300^{+}$,\ h-index: 15}
+\datedsubsection{\textbf{中国科学技术大学}}{2010 -- 2014}
+\textit{本科}\ \ 计算机科学与技术
+
+\section{\faUsers\ 主要经历}
+\datedsubsection{\textbf{腾讯-AI Lab}，深圳}{2021.9 -- 至今}
+\role{技术级别: T11, 自然语言算法平台组，1次5星}
+\textit{主要负责腾讯翻译训练平台搭建、交互翻译模型建设以及先进技术研究}
+\begin{itemize}
+  \item 完成腾讯翻译分布式训练平台构建，交互翻译模型构建与优化，个性化机器翻译策略研发与落地；协助管理自然语言算法平台组翻译方向人员；
+  \item 开展自然语言处理相关研究：提出联邦机器翻译[1], 轻量近邻神经机器翻译(kNN-MT)[2], 多模态机器翻译（包括Speech Translation[6,9]和Automatic Song Translation[7])等新方法，其中轻量kNN-MT成为腾讯翻译的个性化核心策略并完成上线；另外探索模型鲁棒性相关方法，包括理解词级别文本攻击[3]和通过Nearest Neighbor Calibration提升LLM的In-Context Learning能力[4]; 
+\end{itemize}
+
+\datedsubsection{\textbf{阿里巴巴-达摩院}，杭州}{2019.7 -- 2021.8}
+\role{算法专家，语言技术实验室，阿里星，1次375绩效}
+% {主管：陈博兴、谢军}
+\textit{主要负责阿里翻译基础通用模型建设、语音翻译、对外商业化以及先进技术研究}
+\begin{itemize}
+  \item 完成阿里通用翻译自动化链路构建、通用模型质量优化（中英互译内部评测达到Top1）、通用语向扩展（15->214）、线上模型解码加速（2-3x)，以及商业化领域模型定制和交付;
+  \item 开展自然语言处理相关研究: 多语言机器翻译[11,19,21]，融合预训练语言模型的机器翻译[16,17]，基于领域修复的迭代回译方法[18]以及近邻神经机器翻译[10,12,14]。这些方法已用于大幅度提升线上多语言翻译模型性能和领域模型定制效果。另外也探索可变长文本对抗攻击[15]和任务型对话系统作为自然语言生成[8]等新方法;
+  \item 受邀在DataFunTalk 2020年终大会上分享“阿里多语言翻译模型的前沿探索及技术实践”的主题报告;
+\end{itemize}
+
+\datedsubsection{\textbf{微软亚洲研究院}，北京}{2019年2月 -- 2019年6月}
+\role{研究实习生，自然语言计算组，(联合培养博士生项目)}{指导老师: 刘树杰}
+\textit{自然语言处理相关技术研究}
+
+\datedsubsection{\textbf{微软雷德蒙德研究院}，西雅图，美国}{2018年7月 -- 2019年1月}
+\role{Research Intern，Deep Learning Group,}{指导老师: Xiujun Li, Jianfeng Gao}
+\textit{对话系统相关技术研究}
+\begin{itemize}
+  \item 在资源受限的任务型对话场景下，设计Budgeted Policy Learning方法[20]来显著提升对话系统的成功率；
+\end{itemize}
+
+\datedsubsection{\textbf{微软亚洲研究院}，北京}{2015年7月 -- 2018年7月}
+\role{研究实习生，自然语言计算组，(联合培养博士生项目)}{指导老师: 李沐}
+\textit{机器翻译、深度学习、自然语言生成等相关技术研究}
+\begin{itemize}
+  \item 开展神经机器翻译相关研究，提出Iterative Back-Translation[29], Target-bidirectional Agreement[21], Coarse-to-Fine Learning[28], Bidirectional GANs[27]等训练算法，针对无监督机器翻译设计SMT as Posterior Regularization[22]方法，另外将NMT相关技术应用于Dependency Parsing[32]和Text Style Transfer[25]任务中;
+  \item 支持微软内部项目开发(SmartFlow Toolkit、Writing Intelligence和Babel Project):
+  \item[-] \emph{SmartFlow Toolkit (2016)}:  开发C\#版本的深度学习工具，实现OP计算、计算图调度，内部管理等功能，并服务于组内各类模型开发（包括R-NET模型、NLG模型[26,30,31]等），部分模型已应用于微软小冰对话生成和必应产品中;
+  \item[-] \emph{Writing Intelligence Project (2017)}: 该项目想借助深度学习技术去使写作更便捷，其中定义了句子补全、基于关键词的句子生成、语法检查、下一句话推荐这四个功能。主要负责句子补全功能的模型开发以及实现;
+  \item[-] \emph{Babel Project (2017-2018)}: 微软内部多个小组一起合作，探索在大规模语料下当前神经机器翻译的极限。负责将Iterative Back-Translation[29]和Target-bidirectional Agreement[21]两个技术应用于该项目，显著提升模型的性能，并达到人类“可比”水平[24];
+\end{itemize}
+
+\datedsubsection{\textbf{微软亚洲研究院}，北京}{2013年7月 -- 2014年6月}
+\role{研究实习生，自然语言计算组}{指导老师: 李沐}
+\textit{自然语言处理相关技术研究}
+\begin{itemize}
+  \item 熟悉和复现各类基础NLP模型，将word2vec技术用于篇章关系分析中；
+\end{itemize}
+
+\section{\faFilesO\ 主要项目及论文}
+
+个性化机器翻译
+\begin{enumerate}
+
+\item \normalsize \textbf{Simple and Scalable Nearest Neighbor Machine Translation}\\
+\small - Yuhan Dai*, \textbf{Zhirui Zhang*}, Qiuzhi Liu, Qu Cui, Weihua Li, Yichao Du and Tong Xu. In \textit{ICLR}'2023.
+
+\item \normalsize \textbf{Non-Parametric Domain Adaptation for End-to-End Speech Translation}\\
+\small - Yichao Du*, Weizhi Wang*, \textbf{Zhirui Zhang}, Boxing Chen, Jun Xie, Tong Xu and Enhong Chen. In \textit{EMNLP}'2022.
+
+\item \normalsize \textbf{Non-Parametric Online Learning from Human Feedback for Neural Machine Translation}\\
+\small - Dongqi Wang, Hao-Ran Wei, \textbf{Zhirui Zhang}, Shujian Huang, Jun Xie, Weihua Luo and Jiajun Chen. In \textit{AAAI}'2022.
+
+
+
+
+
+\end{enumerate}
+
+\begin{enumerate}
+
+\item \normalsize \textbf{Federated Nearest Neighbor Machine Translation}\\
+\small - Yichao Du, \textbf{Zhirui Zhang}, Bingzhe Wu, Lemao Liu, Tong Xu and Enhong Chen. In \textit{ICLR}'2023.
+
+\item \normalsize \textbf{Simple and Scalable Nearest Neighbor Machine Translation}\\
+\small - Yuhan Dai*, \textbf{Zhirui Zhang*}, Qiuzhi Liu, Qu Cui, Weihua Li, Yichao Du and Tong Xu. In \textit{ICLR}'2023.
+
+\item \normalsize \textbf{Less is More: Understanding Word-level Textual Adversarial Attack via n-gram Frequency Descend}\\
+\small - Ning Lu, Shengcai Liu, \textbf{Zhirui Zhang}, Qi Wang, Haifeng Liu and Ke Tang. \textit{Pre-print}, https://arxiv.org/abs/2302.02568
+
+\item \normalsize \textbf{Improving Few-Shot Performance of Language Models via Nearest Neighbor Calibration}\\
+\small - Feng Nie, Meixi Chen, \textbf{Zhirui Zhang} and Xu Cheng. \textit{Pre-print}, https://arxiv.org/abs/2212.02216
+
+
+\item \normalsize \textbf{Non-Parametric Domain Adaptation for End-to-End Speech Translation}\\
+\small - Yichao Du*, Weizhi Wang*, \textbf{Zhirui Zhang}, Boxing Chen, Jun Xie, Tong Xu and Enhong Chen. In \textit{EMNLP}'2022.
+
+\item \normalsize \textbf{Automatic Song Translation for Tonal Languages}\\
+\small - Fenfei Guo, Chen Zhang, \textbf{Zhirui Zhang}, Qixin He, Kejun Zhang, Jun Xie and Jordan Lee Boyd-Graber. In \textit{ACL}'2022.
+
+\item \normalsize \textbf{Task-Oriented
+Dialogue System as Natural Language Generation}\\
+\small - Weizhi Wang, \textbf{Zhirui Zhang}, Junliang Guo, Yinpei Dai, Boxing Chen and Weihua Luo. In \textit{SIGIR}'2022.
+
+\item \normalsize \textbf{Regularizing End-to-End Speech Translation with Triangular Decomposition Agreement}\\
+\small - Yichao Du, \textbf{Zhirui Zhang}, Weizhi Wang, Boxing Chen, Jun Xie and Tong Xu. In \textit{AAAI}'2022.
+
+\item \normalsize \textbf{Non-Parametric Online Learning from Human Feedback for Neural Machine Translation}\\
+\small - Dongqi Wang, Hao-Ran Wei, \textbf{Zhirui Zhang}, Shujian Huang, Jun Xie, Weihua Luo and Jiajun Chen. In \textit{AAAI}'2022.
+
+\item \normalsize \textbf{Rethinking Zero-shot Neural Machine Translation: From a Perspective of Latent Variables}\\
+\small - Weizhi Wang, \textbf{Zhirui Zhang}, Yichao Du, Boxing Chen, Jun Xie and Weihua Luo. In \textit{EMNLP}'2021.
+
+\item \normalsize \textbf{Non-Parametric Unsupervised Domain Adaptation for Neural Machine Translation}\\
+\small - Xin Zheng, \textbf{Zhirui Zhang}, Shujian Huang, Boxing Chen, Jun Xie, Weihua Luo and Jiajun Chen. In \textit{EMNLP}'2021.
+
+\item \normalsize \textbf{Sentence-State LSTMs for Sequence-to-Sequence Learning}\\
+\small - Xuefeng Bai, Yafu Li, \textbf{Zhirui Zhang}, Mingzhou Xu, Boxing Chen, Weihua Luo, Derek Wong and Yue Zhang. In \textit{NLPCC}'2021.
+
+\item \normalsize \textbf{Adaptive Nearest Neighbor Machine Translation}\\
+\small - Xin Zheng, \textbf{Zhirui Zhang}, Junliang Guo, Shujian Huang, Boxing Chen, Weihua Luo and Jiajun Chen. In \textit{ACL-IJCNLP}'2021.
+
+\item \normalsize \textbf{Towards Variable-Length Textual Adversarial Attacks}\\
+\small - Junliang Guo, \textbf{Zhirui Zhang}, Linlin Zhang, Linli Xu, Boxing Chen, Enhong Chen and Weihua Luo. \textit{Pre-print}, https://arxiv.org/abs/2104.08139 
+
+\item \normalsize \textbf{Adaptive Adapter: an Efficient
+Way to Incorporate BERT into Neural Machine Translation}\\
+\small - Junliang Guo, \textbf{Zhirui Zhang}, Linli Xu, Boxing Chen and Enhong Chen. In \textit{TASLP}'2021.
+
+\item \normalsize \textbf{Incorporating BERT into Parallel Sequence Decoding with Adapters}\\
+\small - Junliang Guo, \textbf{Zhirui Zhang}, Linli Xu, Hao-Ran Wei, Boxing Chen and Enhong Chen. In \textit{NeurIPS}'2020
+
+\item \normalsize \textbf{Iterative Domain-Repaired Back-Translation} \\
+\small - Hao-Ran Wei, \textbf{Zhirui Zhang}, Boxing Chen and Weihua Luo. In \textit{EMNLP}'2020.
+
+\item \normalsize \textbf{Cross-lingual Pre-training Based Transfer for Zero-shot Neural Machine Translation} \\
+\small - Baijun Ji, \textbf{Zhirui Zhang}, Xiangyu Duan, Min Zhang, Boxing Chen and Weihua Luo. In \textit{AAAI}'2020.
+
+\item \normalsize \textbf{Budgeted Policy Learning for Task-Oriented Dialogue Systems} \\
+\small - \textbf{Zhirui Zhang}, Xiujun Li, Jianfeng Gao and Enhong Chen. In \textit{ACL}'2019.
+
+\item \normalsize \textbf{Regularizing Neural Machine Translation by Target-bidirectional Agreement} \\
+\small - \textbf{Zhirui Zhang}, Shuangzhi Wu, Shujie Liu, Mu Li, Ming Zhou and Tong Xu. In \textit{AAAI}'2019.
+
+\item \normalsize \textbf{Unsupervised Neural Machine Translation with SMT as Posterior Regularization} \\
+\small - Shuo Ren*, \textbf{Zhirui Zhang*}, Shujie Liu, Ming Zhou and Shuai Ma. In \textit{AAAI}'2019.
+
+\item \normalsize \textbf{Dependency-to-Dependency Neural Machine Translation} \\
+\small - Shuangzhi Wu, Dongdong Zhang, \textbf{Zhirui Zhang}, Nan Yang, Mu Li and Ming Zhou. In \textit{TASLP}'2018.
+
+\item \normalsize \textcolor{red}{\textbf{Achieving Human Parity on Automatic Chinese to English News Translation}} \\
+\small - Hany Hassan, Anthony Aue, Chang Chen, Vishal Chowdhary, Jonathan Clark, Christian Federmann, Xuedong Huang, Marcin Junczys-Dowmunt, William Lewis, Mu Li, Shujie Liu, Tie-Yan Liu, Renqian Luo, Arul Menezes, Tao Qin, Frank Seide, Xu Tan, Fei Tian, Lijun Wu, Shuangzhi Wu, Yingce Xia, Dongdong Zhang, \textbf{Zhirui Zhang} and Ming Zhou. \textit{Pre-print}, https://arxiv.org/abs/1803.05567 
+
+\item \normalsize \textbf{Style Transfer as Unsupervised Machine Translation} \\
+\small - \textbf{Zhirui Zhang*}, Shuo Ren*, Shujie Liu, Jianyong Wang, Peng Chen, Mu Li, Ming Zhou and Enhong Chen. \textit{Pre-print}, https://arxiv.org/abs/1808.07894
+
+\item \normalsize \textbf{Approximate Distribution Matching for Sequence-to-Sequence Learning} \\
+\small - Wenhu Chen, Guanlin Li, Shujie Liu, \textbf{Zhirui Zhang}, Mu Li, Ming Zhou. \textit{Pre-print}, https://arxiv.org/abs/1808.08003
+
+\item \normalsize \textbf{Bidirectional Generative Adversarial Networks for Neural Machine Translation} \\
+\small - \textbf{Zhirui Zhang}, Shujie Liu, Mu Li, Ming Zhou and Enhong Chen. In \textit{CoNLL}'2018.
+
+\item \normalsize \textbf{Coarse-To-Fine Learning for Neural Machine Translation} \\
+\small - \textbf{Zhirui Zhang}, Shujie Liu, Mu Li, Ming Zhou and Enhong Chen. In \textit{NLPCC}'2018.
+
+\item \normalsize \textbf{Joint Training for Neural Machine Translation Models with Monolingual Data} \\
+\small - \textbf{Zhirui Zhang}, Shujie Liu, Mu Li, Ming Zhou and Enhong Chen. In \textit{AAAI}'2018.
+
+\item \normalsize \textbf{Generative Bridging Network in Neural Sequence Prediction} \\
+\small - Wenhu Chen, Guanlin Li, Shuo Ren, Shujie Liu, \textbf{Zhirui Zhang}, Mu Li and Ming Zhou. In \textit{NAACL}'2018.
+
+\item \normalsize \textbf{Learning to Collaborate for Question Answering and Asking} \\
+\small - Duyu Tang, Nan Duan, Zhao Yan, \textbf{Zhirui Zhang}, Yibo Sun, Shujie Liu, Yuanhua Lv and Ming Zhou. In \textit{NAACL}'2018.
+
+\item \normalsize \textbf{Stack-based Multi-layer Attention for Transition-based Dependency Parsing} \\
+\small - \textbf{Zhirui Zhang}, Shujie Liu, Mu Li, Ming Zhou and Enhong Chen. In \textit{EMNLP}'2017.
+
+\end{enumerate}
+
+\section{\faCogs\ 主要技能及学术服务}
+% increase linespacing [parsep=0.5ex]
+\begin{itemize}
+  \item 专业技能: 机器翻译/自然语言生成/对话系统/预训练语言模型/对抗攻击/依存句法分析等
+  \item 编程技能: Python/C++/C\#/Java/CUDA/Cudnn/Tensorflow/Pytorch
+  \item 学术服务: 担任多个NLP/ML会议与期刊长期审稿人，包括ACL、EMNLP、NAACL、AAAI、IJCAI、NeurIPS、ICML、ICLR等
+\end{itemize}
+
+\section{\faHeartO\ 主要获奖情况}
+\datedline{\textit{国家奖学金}}{2013}
+\datedline{\textit{谷歌奖学金}}{2013}
+\datedline{\textit{微软亚洲研究院实习生“明日之星”}}{2019}
+
+%% Reference
+%\newpage
+%\bibliographystyle{IEEETran}
+%\bibliography{mycite}
+\end{document}
