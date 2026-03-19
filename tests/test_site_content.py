@@ -78,6 +78,13 @@ class SiteStructureTests(unittest.TestCase):
         self.assertIn('data-year="2026"', html)
         self.assertIn('href="https://arxiv.org/abs/2602.09447"', html)
 
+    def test_pages_include_shared_nav_and_mobile_toggle_hook(self) -> None:
+        for path in ["index.html", "publications.html"]:
+            html = read_text(path)
+            self.assertIn('class="site-nav"', html)
+            self.assertIn("data-nav-toggle", html)
+            self.assertIn('src="Files/site.js"', html)
+
 
 if __name__ == "__main__":
     unittest.main()
