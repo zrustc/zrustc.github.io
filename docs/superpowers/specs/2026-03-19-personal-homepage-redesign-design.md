@@ -28,8 +28,24 @@ Redesign the existing static personal website into a more polished English-langu
 
 ### Required Sources
 
-- Local resume source: `resume_zhirui/zhirui_20260319.tex`
+- Local resume source outside this repository:
+  `/Users/zhangzhirui/workspace_zzr/writing/resume_zhirui/zhirui_20260319.tex`
 - Public Google Scholar profile: `https://scholar.google.com/citations?user=C8Ylo7sAAAAJ&hl=en`
+
+### Source Of Truth Rules
+
+- Resume is the source of truth for:
+  - professional summary
+  - career timeline
+  - role descriptions
+  - awards and service items that appear in the resume
+- Google Scholar is the source of truth for:
+  - publication list
+  - publication ordering or year grouping when sourced from Scholar
+  - citation metrics
+  - public research tags
+- If resume wording and Scholar wording differ for paper titles or venues, prefer Scholar for publication metadata and prefer the resume for self-description and career information.
+- The Scholar metrics and tags written in this spec are a verified snapshot as of `2026-03-19`. During implementation, those metric values should be refreshed against the live public Scholar page if network access is available; otherwise, the planner may fall back to the snapshot values in this spec.
 
 ### Key Data To Incorporate
 
