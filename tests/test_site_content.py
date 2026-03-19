@@ -89,6 +89,42 @@ class SiteStructureTests(unittest.TestCase):
         html = read_text("index.html")
         self.assertIn("<title>Zhirui Zhang</title>", html)
 
+    def test_homepage_hero_uses_short_keyword_headline(self) -> None:
+        html = read_text("index.html")
+        self.assertIn("LLM Post-Training", html)
+        self.assertIn("Multimodal", html)
+        self.assertNotIn(
+            "Researcher-builder in LLM post-training, reasoning, multilingual, and translation systems.",
+            html,
+        )
+
+    def test_homepage_selected_work_has_influential_and_recent_groups(self) -> None:
+        html = read_text("index.html")
+        self.assertIn("Influential", html)
+        self.assertIn("Recent", html)
+        self.assertIn("Achieving Human Parity on Automatic Chinese to English News Translation", html)
+        self.assertIn("Adaptive Nearest Neighbor Machine Translation", html)
+        self.assertIn("SWE-AGI", html)
+
+    def test_blog_navigation_and_page_exist(self) -> None:
+        for path in ["index.html", "publications.html"]:
+            html = read_text(path)
+            self.assertIn('href="blog.html"', html)
+            self.assertIn(">Blog<", html)
+        blog = read_text("blog.html")
+        self.assertIn("<title>Blog | Zhirui Zhang</title>", blog)
+        self.assertIn('class="site-nav"', blog)
+        self.assertIn("data-nav-toggle", blog)
+        self.assertIn('src="Files/site.js"', blog)
+
+    def test_publications_page_includes_more_older_work(self) -> None:
+        html = read_text("publications.html")
+        for year in ["2022", "2021", "2020", "2019", "2018"]:
+            self.assertIn(f'data-year="{year}"', html)
+        self.assertIn("Task-Oriented Dialogue System as Natural Language Generation", html)
+        self.assertIn("Cross-lingual Pre-training Based Transfer for Zero-shot Neural Machine Translation", html)
+        self.assertIn("Achieving Human Parity on Automatic Chinese to English News Translation", html)
+
 
 if __name__ == "__main__":
     unittest.main()
