@@ -256,6 +256,10 @@ img {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.blog-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .publication-card,
 .timeline-item,
 .work-cluster,
@@ -300,6 +304,18 @@ img {
 
 .writing-notes .chip-grid {
   margin-top: 18px;
+}
+
+.blog-card p {
+  margin: 0;
+}
+
+.blog-status {
+  margin-bottom: 12px;
+  color: var(--color-coral);
+  font: 700 12px/1.3 "Courier New", Courier, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .timeline-item {
@@ -361,6 +377,7 @@ img {
 @media (max-width: 980px) {
   .hero,
   .site-layout,
+  .blog-grid,
   .selected-work-grid,
   .two-up,
   .timeline-item {
