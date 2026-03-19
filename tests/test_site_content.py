@@ -59,6 +59,25 @@ class SiteStructureTests(unittest.TestCase):
         self.assertIn("Large Language Model", html)
         self.assertIn("World Model", html)
 
+    def test_publications_page_lists_recent_anchor_papers(self) -> None:
+        html = read_text("publications.html")
+        for title in [
+            "SWE-AGI",
+            "Is PRM Necessary?",
+            "Safe Delta",
+            "Simple o3",
+            "Lost in the Source Language",
+            "Document-Level Machine Translation with Large Language Models",
+        ]:
+            self.assertIn(title, html)
+
+    def test_publications_page_contains_rich_entry_metadata(self) -> None:
+        html = read_text("publications.html")
+        self.assertIn("Z Zhang, H Zhang, H Fei", html)
+        self.assertIn("arXiv preprint arXiv:2602.09447", html)
+        self.assertIn('data-year="2026"', html)
+        self.assertIn('href="https://arxiv.org/abs/2602.09447"', html)
+
 
 if __name__ == "__main__":
     unittest.main()
