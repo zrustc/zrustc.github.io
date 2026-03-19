@@ -1,1 +1,1 @@
-[https://zrustc.github.io/](https://zrustc.github.io/)
+Static personal site for Zhirui Zhang.

@@ -85,6 +85,10 @@ class SiteStructureTests(unittest.TestCase):
             self.assertIn("data-nav-toggle", html)
             self.assertIn('src="Files/site.js"', html)
 
+    def test_homepage_title_matches_new_branding(self) -> None:
+        html = read_text("index.html")
+        self.assertIn("<title>Zhirui Zhang</title>", html)
+
 
 if __name__ == "__main__":
     unittest.main()
