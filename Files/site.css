@@ -440,6 +440,10 @@ img {
   margin-top: 24px;
 }
 
+.pub-year-group {
+  scroll-margin-top: 96px;
+}
+
 .pub-entry + .pub-entry {
   margin-top: 18px;
   padding-top: 18px;
