@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An essay on tokenization, latent variables, verification, and the capability boundaries of large models.">
+  <meta name="description" content="An essay on tokenization, latent variables, verification, and the capability boundaries of foundation models.">
   <title>AI and the God Model | Zhirui Zhang</title>
   <link rel="shortcut icon" href="Files/1.ico">
   <link rel="stylesheet" href="Files/site.css">
@@ -29,16 +29,17 @@
     <article class="essay-article">
       <section class="section-block essay-hero">
         <p class="section-label">Essay</p>
-        <h1 class="page-title">AI and the God Model: Where Are the Capability Boundaries of Large Models?</h1>
+        <h1 class="page-title">AI and the God Model: Where Are the Capability Boundaries of Foundation Models?</h1>
         <p class="lede">
-          A distributional view of large models: tokenization as interface, pretraining as world-projection compression,
+          A distributional view of foundation models: tokenization as interface, pretraining as compressing a projection of the world,
           post-training as better latent-variable inference, and the real bottlenecks that still define model capability.
         </p>
         <div class="essay-meta">
           <span class="metric-pill">March 20, 2026</span>
-          <span class="metric-pill">English Translation</span>
+          <span class="metric-pill">Translated from Chinese</span>
           <span class="metric-pill">Models / Reasoning / Systems</span>
         </div>
+        <p class="essay-note">Translated from the original Chinese essay.</p>
         <div class="hero-links">
           <a class="primary-link" href="blog.html">Back to Blog</a>
           <a class="secondary-link" href="index.html">Home</a>
@@ -51,25 +52,26 @@
           Suppose a “God model” existed. It would not be some mystical network, nor a myth of machine omniscience, but a
           theoretical limit object: a model that exactly captures the joint distribution of everything in the world that is
           observable and encodable. If we encode any object as a sequence and denote it by <code>x</code>, then the model
-          corresponds to the true distribution <code>p*(x)</code>.
+          corresponds to the true distribution <code>p<sup>*</sup>(x)</code>.
         </p>
-        <pre class="equation-block">x ~ p*(x)</pre>
+        <pre class="equation-block">x ~ p<sup>*</sup>(x)</pre>
         <p>
           If that distribution were fully known, three consequences would follow. It could predict, generate, and compress.
-          Given any partial observation <code>x&lt;t</code>, it would know which next token is most probable. Generation would
+          Given any partial observation <code>x<sub>&lt;t</sub></code>, it would know which next token is most probable. Generation would
           simply be sampling from the distribution. The optimal code length would be governed by Shannon entropy
           (<a href="https://www.mpi.nl/publications/item2383162/mathematical-theory-communication">Shannon, 1948</a>):
         </p>
-        <pre class="equation-block">H(X) = -Σ_x p*(x) log p*(x)</pre>
+        <pre class="equation-block">H(X) = &minus;&Sigma;<sub>x</sub> p<sup>*</sup>(x) log p<sup>*</sup>(x)</pre>
         <p>
           This is the starting point of the essay: prediction, generation, and compression can all be unified as one problem,
-          namely approximating the true distribution. From this angle, what is interesting about large models is not merely
+          namely approximating the true distribution. From this angle, what is interesting about foundation models is not merely
           that they can speak, but that they may be approaching this “God distribution” through an engineering process.
         </p>
         <p>
           A caveat is necessary. The real world may not correspond to a single fixed <code>p(x)</code>. A more realistic
-          description is often <code>p_t(x)</code>, because distributions drift and deployed systems in turn reshape the world.
-          In this essay, then, the God model is a thought experiment rather than a directly solvable object.
+          description is often <code>p<sub>t</sub>(x)</code>, because distributions drift and deployed systems in turn reshape the world.
+          In this essay, then, the God model is a thought experiment rather than a directly solvable object, but it remains a
+          useful thought experiment for studying world knowledge and regularities that are less affected by external intervention.
         </p>
 
         <h2>Why the World Can Be Tokenized</h2>
@@ -125,12 +127,12 @@
           only fits the wrong representation more accurately.
         </p>
 
-        <h2>How Large Models Approximate the Joint Distribution of the World</h2>
+        <h2>How Foundation Models Approximate the Joint Distribution of the World</h2>
         <p>
           Once objects are tokenized, the training objective becomes strikingly uniform. For a sequence
-          <code>x = (x_1, ..., x_T)</code>, an autoregressive model learns:
+          <code>x = (x<sub>1</sub>, ..., x<sub>T</sub>)</code>, an autoregressive model learns:
         </p>
-        <pre class="equation-block">p_θ(x) = Π_(t=1)^T p_θ(x_t | x_&lt;t)</pre>
+        <pre class="equation-block">p<sub>&theta;</sub>(x) = &Pi;<sub>t=1</sub><sup>T</sup> p<sub>&theta;</sub>(x<sub>t</sub> | x<sub>&lt;t</sub>)</pre>
         <p>
           This is just the chain rule of probability, but it reveals something important: what looks like next-token prediction
           is, in substance, the approximation of a high-dimensional joint distribution through a sequence of conditional
@@ -146,7 +148,7 @@
         <p>
           A more realistic formulation therefore acknowledges a latent-variable layer:
         </p>
-        <pre class="equation-block">p(x) = Σ_z p(z) p(x | z)</pre>
+        <pre class="equation-block">p(x) = &Sigma;<sub>z</sub> p(z) p(x | z)</pre>
         <p>
           Here <code>z</code> may represent many things: intermediate derivations in problem solving, exploration traces in task
           execution, or even preferences and constraints that were never made explicit in text. Without those variables, internet
@@ -155,13 +157,13 @@
           sequence <code>x</code>.
         </p>
         <p>
-          Large models, then, do not directly learn “the world itself.” They use massive amounts of observable structure to
+          Foundation models, then, do not directly learn “the world itself.” They use massive amounts of observable structure to
           approximate a joint distribution whose latent variables have been partially folded away.
         </p>
 
         <h2>Latent Variables, the VAE Lens, and the Intuition of Generalized EM</h2>
         <p>
-          This is why I think present-day large-model training can be viewed, cautiously, as a form of latent-variable learning.
+          This is why I think the training of present-day foundation models can be viewed, cautiously, as a form of latent-variable learning.
           The point is not to force LLMs into an existing model class, but to adopt an analytical lens that clarifies the
           structure. The mapping is heuristic, not a strict equivalence.
         </p>
@@ -181,20 +183,21 @@
           space. In variational form, this corresponds to the ELBO
           (<a href="https://arxiv.org/abs/1312.6114">Kingma and Welling, 2013</a>):
         </p>
-        <pre class="equation-block">log p(x) ≥ E_[q_φ(z | x)] [log p_θ(x | z)] - D_KL(q_φ(z | x) || p(z))</pre>
+        <pre class="equation-block">log p(x) &ge; E<sub>q<sub>&phi;</sub>(z | x)</sub> [log p<sub>&theta;</sub>(x | z)]
+&minus; D<sub>KL</sub>(q<sub>&phi;</sub>(z | x) || p(z))</pre>
         <p>
-          Translated into the large-model setting, the point is not that an LLM literally optimizes this exact objective, but
+          Translated into the foundation-model setting, the point is not that an LLM literally optimizes this exact objective, but
           that the decomposition is suggestive:
         </p>
         <p>
           Pretraining resembles learning an implementable approximation to both a prior over latent variables <code>p(z)</code>
           and a conditional distribution that maps those latent variables to outcomes <code>p(x | z)</code>. Post-training, in
-          turn, resembles improving an inference distribution, call it <code>q_φ(z | x, c)</code>, that maps task and context
-          into better latent explanations. The practical effect is that, given context <code>c</code>, the system more reliably
-          enters latent regions that lead to high-quality results.
+          turn, resembles improving an inference distribution, call it <code>q<sub>&phi;</sub>(z | x)</code>, that infers better
+          intermediate explanations from the task and its context. The practical effect is that the system more reliably enters
+          latent regions that lead to high-quality results.
         </p>
         <p>
-          This <code>q_φ</code> need not exist as a separate explicit module. It may instead appear as policy rewriting, search
+          This <code>q<sub>&phi;</sub></code> need not exist as a separate explicit module. It may instead appear as policy rewriting, search
           preference, reasoning templates, preference models, process reward models, or an internal bias about where exploration
           should continue. The stronger system is the one that hits good <code>z</code> more reliably.
         </p>
@@ -204,14 +207,14 @@
           current model together with a verifier to search for better latent assignments, then write those trajectories back into
           the parameters:
         </p>
-        <pre class="equation-block">q^(k)(z | x, c) ≈ Search_(θ_k, V)(z)
-θ_(k+1) ← arg max_θ E_[q^(k)] [log p_θ(x, z | c)]</pre>
+        <pre class="equation-block">q<sup>(k)</sup>(z | x) &asymp; Search<sub>(&theta;<sub>k</sub>, V)</sub>(z)
+&theta;<sub>k+1</sub> &larr; arg&thinsp;max<sub>&theta;</sub> E<sub>q<sup>(k)</sup></sub> [log p<sub>&theta;</sub>(x, z)]</pre>
         <p>
           In the textbook EM setting, exact E-steps and exact M-steps guarantee that the incomplete-data log-likelihood does not
           decrease; generalized EM preserves a weaker monotonic-improvement intuition as long as each iteration improves the
-          auxiliary objective. Real large-model training is not that clean: optimization is non-convex, search is approximate,
+          auxiliary objective. Real foundation-model training is not that clean: optimization is non-convex, search is approximate,
           rewards are noisy, sampling is finite, and distributions drift. Still, the lens offers a compelling intuition. If each
-          round finds high-quality latent variables more reliably and then writes those trajectories back into training, then
+          round finds high-quality latent variables more reliably and then incorporates those trajectories into the training process, then
           capability gains are not just accidental improvements in answer quality; they admit an iterative algorithmic
           interpretation. Put more intuitively: the system first finds occasionally successful paths through large-scale trial and
           error, then gradually consolidates those paths into stable “muscle memory.”
@@ -224,12 +227,12 @@
 
         <h2>Why RL, Synthetic Data, and Distillation Keep Working</h2>
         <p>
-          If the perspective above is directionally right, then the effectiveness of reinforcement learning becomes much easier to
+          If the perspective above is directionally correct, then the effectiveness of reinforcement learning becomes much easier to
           explain. For a tokenized task with a verifiable objective, as long as the correct solution remains inside the model’s
           support and the probability of hitting it in one sample is <code>p &gt; 0</code>, then the probability of seeing at
           least one correct sample after <code>n</code> draws is:
         </p>
-        <pre class="equation-block">1 - (1 - p)^n</pre>
+        <pre class="equation-block">1 &minus; (1 &minus; p)<sup>n</sup></pre>
         <p>
           The equation is simple, but it captures the core dynamics behind many current post-training techniques. If:
         </p>
@@ -249,11 +252,11 @@
           The same lens explains why data produced by one generation of models can make the next generation stronger. The key is
           not that “a model feeds itself,” but that the training distribution is reweighted:
         </p>
-        <pre class="equation-block">q_k(x | c) ∝ p_(θ_k)(x | c) w(x, c)</pre>
+        <pre class="equation-block">q<sub>k</sub>(x) &prop; p<sub>&theta;<sub>k</sub></sub>(x) w(x)</pre>
         <p>
-          Here <code>w(x, c)</code> is a weight supplied by a verifier, a reward model, execution feedback, human filtering, or
-          a teacher model. The next generation is not fitting the raw distribution of the previous model. It is fitting a better
-          posterior sample distribution exposed by search and filtering. STaR is fundamentally this idea
+          Here <code>w(x)</code> is a weight supplied by a verifier, a reward model, execution feedback, human filtering, or
+          a teacher model. The next generation is not fitting the raw distribution of the previous model. It is fitting a
+          higher-quality sample distribution induced by search and filtering. STaR is fundamentally this idea
           (<a href="https://arxiv.org/abs/2203.14465">Zelikman et al., 2022</a>).
         </p>
         <p>
@@ -263,7 +266,7 @@
           low-probability yet high-value.
         </p>
         <p>
-          Conversely, if one relies only on naked recursive sampling without a verifier, external signal, or real-data anchor,
+          Conversely, if one relies only on unconstrained recursive sampling without a verifier, external signal, or real-data anchor,
           the risks are clear: tail regions disappear, erroneous modes are amplified, and the system drifts toward model collapse
           or mode forgetting, exactly the warning emphasized by “The Curse of Recursion”
           (<a href="https://arxiv.org/abs/2305.17493">Shumailov et al., 2023</a>). So the right statement is not that synthetic
@@ -271,19 +274,19 @@
           unconstrained self-feeding can absolutely collapse.
         </p>
         <p>
-          Distillation fits naturally into the same frame. It is not magic. It writes the teacher’s already-exposed high-value
-          distribution back into a cheaper student model. Classical knowledge distillation trains the student to match the
+          Distillation fits naturally into the same frame. It is not magic. It distills the teacher’s already-exposed high-value
+          distribution into a cheaper student model. Classical knowledge distillation trains the student to match the
           teacher’s output distribution (<a href="https://research.google/pubs/distilling-the-knowledge-in-a-neural-network/">Hinton et al., 2015</a>).
           In the latent-variable framing here, one can read it as follows: the teacher is better at reaching good latent regions,
-          and distillation is a lower-cost way to copy that posterior bias, or that inference competence.
+          and distillation is a lower-cost way to copy that posterior bias, or that inference capability.
         </p>
 
-        <h2>Where the Capability Boundaries of Large Models Really Are</h2>
+        <h2>Where the Capability Boundaries of Foundation Models Really Are</h2>
         <p>
           At this point, a natural question follows: is the God model the destination? In theory, yes. In practice, far from it.
         </p>
         <p>
-          The first boundary is the boundary of informatization. Many crucial variables never enter the data at all. Human
+          The first boundary is the observability boundary. Many crucial variables never enter the data at all. Human
           exploration in real environments, embodied interaction, long-horizon feedback, and failed attempts are often not
           recorded completely as tokens. What never enters tokens never enters the likelihood.
         </p>
@@ -297,7 +300,7 @@
           complex social coordination, the verifier is often unclear, unstable, or prohibitively expensive. Even when a reward or
           preference model exists, another risk appears: as the model moves outside the verifier’s training distribution, the
           verification signal itself drifts and can even induce reward hacking. Without a trustworthy verification loop, the
-          efficiency of the whole “sample, select, and write back” pipeline drops sharply.
+          efficiency of the whole “sample, select, and reincorporate into training” pipeline drops sharply.
         </p>
         <p>
           The third boundary is the boundary of search. A correct solution existing inside the support set does not imply that
@@ -308,7 +311,7 @@
         </p>
         <p>
           The fourth boundary is the boundary of distributional stability. The real world is not a static dataset. The more
-          faithful object is <code>p_t(x)</code>, not a fixed <code>p(x)</code>. Once models begin to influence markets, public
+          faithful object is <code>p<sub>t</sub>(x)</code>, not a fixed <code>p(x)</code>. Once models begin to influence markets, public
           discourse, code repositories, educational materials, and human behavior itself, the training target co-evolves with the
           deployment target. “Approximating the true distribution” then stops being a one-shot problem and becomes a moving
           target.
@@ -323,21 +326,21 @@
 
         <h2>Closing</h2>
         <p>
-          I increasingly prefer to think of large models as machines for approximating joint distributions.
+          Foundation models can be understood as machines for approximating the world&#8217;s joint distribution.
         </p>
         <p>
-          Pretraining is not just memorizing corpora; it compresses some projection of the world through massive observable
-          structure. Post-training is not just teaching manners; it reshapes the model’s ability to enter high-value latent
+          Pretraining is not just memorizing corpora; it amounts to compressing a projection of the world through massive observable
+          structure. Post-training is not just aligning human preferences; it reshapes the model’s ability to enter high-value latent
           regions. The common success of reinforcement learning, synthetic data, and distillation is not accidental either. All
           three mechanisms are doing the same basic thing: making sparse, low-probability, high-value structure more explicit and
-          then writing it back into the model.
+          then reincorporating it into the model.
         </p>
         <p>
-          Seen from that angle, the capability boundaries of large models may not be primarily about whether models can keep
-          getting bigger. They are more likely to be about how much of the world has not yet been informatized, how many tasks
-          still cannot form a reliable verification loop, and how many correct solutions remain inaccessible to engineering
-          search. That seems closer to the real bottleneck of the next phase of AI competition than arguments about parameter
-          count, context length, or even architecture alone.
+          Seen from that angle, the capability boundaries of foundation models may not be primarily about whether models can keep
+          getting bigger. They are more likely to be about how much of the world has not yet been captured as usable information,
+          how many tasks still cannot form a reliable verification loop, and how many correct solutions remain inaccessible to
+          engineering search. That seems closer to the real bottleneck of the next phase of AI competition than arguments about
+          parameter count, context length, or even architecture alone.
         </p>
 
         <h2>References</h2>

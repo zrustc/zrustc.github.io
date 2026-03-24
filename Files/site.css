@@ -590,6 +590,12 @@ img {
   margin-top: 24px;
 }
 
+.essay-note {
+  margin: 14px 0 0;
+  color: var(--color-muted);
+  font-size: 0.96rem;
+}
+
 .essay-body {
   padding-bottom: 40px;
 }
@@ -630,6 +636,12 @@ img {
   background: linear-gradient(180deg, rgba(234, 242, 250, 0.92), rgba(255, 255, 255, 0.96));
   color: var(--color-navy);
   font: 700 0.98rem/1.6 "Courier New", Courier, monospace;
+}
+
+.equation-block sub,
+.equation-block sup {
+  font-size: 0.8em;
+  line-height: 0;
 }
 
 .essay-body ul {

@@ -122,13 +122,83 @@ class SiteStructureTests(unittest.TestCase):
         blog = read_text("blog.html")
         self.assertIn('href="blog-ai-and-god-boundary.html"', blog)
         self.assertIn("AI and the God Model", blog)
+        self.assertIn("boundaries of foundation models", blog)
+        self.assertNotIn("boundaries of large models", blog)
 
         article = read_text("blog-ai-and-god-boundary.html")
         self.assertIn("<title>AI and the God Model | Zhirui Zhang</title>", article)
-        self.assertIn("Where Are the Capability Boundaries of Large Models?", article)
+        self.assertIn("Where Are the Capability Boundaries of Foundation Models?", article)
+        self.assertIn("A distributional view of foundation models", article)
+        self.assertIn("How Foundation Models Approximate the Joint Distribution of the World", article)
+        self.assertIn("Where the Capability Boundaries of Foundation Models Really Are", article)
+        self.assertNotIn("Where Are the Capability Boundaries of Large Models?", article)
         self.assertIn('class="site-nav"', article)
         self.assertIn("data-nav-toggle", article)
         self.assertIn('src="Files/site.js"', article)
+
+    def test_blog_article_uses_readable_math_markup(self) -> None:
+        article = read_text("blog-ai-and-god-boundary.html")
+        for marker in [
+            "p<sup>*</sup>(x)",
+            "x<sub>&lt;t</sub>",
+            "p<sub>&theta;</sub>(x)",
+            "q<sub>k</sub>(x)",
+            "E<sub>q<sub>&phi;</sub>(z | x)</sub>",
+            "E<sub>q<sup>(k)</sup></sub>",
+            "(1 &minus; p)<sup>n</sup>",
+            "p<sub>t</sub>(x)",
+        ]:
+            self.assertIn(marker, article)
+
+        for marker in [
+            "x&lt;t",
+            "p*(x)",
+            "p_θ(x)",
+            "p_(θ_k)(x | c)",
+            "p_t(x)",
+            "(1 - p)^n",
+        ]:
+            self.assertNotIn(marker, article)
+
+    def test_blog_article_identifies_translation_source_and_uses_professional_term(self) -> None:
+        article = read_text("blog-ai-and-god-boundary.html")
+        self.assertIn("Translated from the original Chinese essay.", article)
+        self.assertIn("observability boundary", article)
+        self.assertIn("compressing a projection of the world", article)
+        self.assertNotIn("English Translation", article)
+        self.assertNotIn("informatization", article)
+        self.assertNotIn("large-model training", article)
+
+    def test_blog_article_matches_latest_source_drift_fixes(self) -> None:
+        article = read_text("blog-ai-and-god-boundary.html")
+        article_compact = " ".join(article.split())
+        for marker in [
+            "remains a useful thought experiment for studying world knowledge and regularities",
+            "less affected by external intervention",
+            "q<sub>&phi;</sub>(z | x)",
+            "q<sup>(k)</sup>(z | x)",
+            "log p<sub>&theta;</sub>(x, z)",
+            "q<sub>k</sub>(x) &prop; p<sub>&theta;<sub>k</sub></sub>(x) w(x)",
+            "Foundation models can be understood as machines for approximating the world&#8217;s joint distribution",
+            "Post-training is not just aligning human preferences",
+            "captured as usable information",
+            "higher-quality sample distribution induced by search and filtering",
+            "unconstrained recursive sampling without a verifier",
+        ]:
+            self.assertIn(marker, article_compact)
+
+        for marker in [
+            "q<sub>&phi;</sub>(z | x, c)",
+            "q<sup>(k)</sup>(z | x, c)",
+            "log p<sub>&theta;</sub>(x, z | c)",
+            "q<sub>k</sub>(x | c) &prop; p<sub>&theta;<sub>k</sub></sub>(x | c) w(x, c)",
+            "I increasingly prefer to think",
+            "Post-training is not just teaching manners",
+            "Large models can be understood as machines for approximating the world&#8217;s joint distribution",
+            "posterior sample distribution exposed by search and filtering",
+            "naked recursive sampling",
+        ]:
+            self.assertNotIn(marker, article_compact)
 
     def test_blog_archive_exposes_metadata_and_year_group(self) -> None:
         blog = read_text("blog.html")
