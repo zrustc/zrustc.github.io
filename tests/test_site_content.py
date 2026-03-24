@@ -127,11 +127,18 @@ class SiteStructureTests(unittest.TestCase):
 
         article = read_text("blog-ai-and-god-boundary.html")
         self.assertIn("<title>AI and the God Model | Zhirui Zhang</title>", article)
-        self.assertIn("Where Are the Capability Boundaries of Foundation Models?", article)
+        self.assertIn("The God Model: Defining the Capability Boundaries of Foundation Models", article)
         self.assertIn("A distributional view of foundation models", article)
+        self.assertIn("the fundamental bottlenecks that govern model capability.", article)
+        self.assertIn("The Tokenization of the World", article)
+        self.assertIn("The Continued Efficacy of RL, Synthetic Data, and Distillation", article)
         self.assertIn("How Foundation Models Approximate the Joint Distribution of the World", article)
-        self.assertIn("Where the Capability Boundaries of Foundation Models Really Are", article)
+        self.assertIn("The True Boundaries of Foundation Model Capability", article)
         self.assertNotIn("Where Are the Capability Boundaries of Large Models?", article)
+        self.assertNotIn("Where Are the Capability Boundaries of Foundation Models?", article)
+        self.assertNotIn("Why the World Can Be Tokenized", article)
+        self.assertNotIn("Why RL, Synthetic Data, and Distillation Keep Working", article)
+        self.assertNotIn("Where the Capability Boundaries of Foundation Models Really Are", article)
         self.assertIn('class="site-nav"', article)
         self.assertIn("data-nav-toggle", article)
         self.assertIn('src="Files/site.js"', article)
@@ -184,6 +191,9 @@ class SiteStructureTests(unittest.TestCase):
             "captured as usable information",
             "higher-quality sample distribution induced by search and filtering",
             "unconstrained recursive sampling without a verifier",
+            "The true constraints lie in the extent to which the world has been captured as usable information",
+            "the limits of model scaling",
+            "All three mechanisms share a common objective",
         ]:
             self.assertIn(marker, article_compact)
 
