@@ -39,23 +39,70 @@
     </section>
 
     <section class="section-block">
-      <div class="blog-grid">
-        <article class="blog-card">
-          <p class="blog-status">Starter Post</p>
-          <h2>What will live here</h2>
+      <div class="archive-shell">
+        <aside class="archive-meta">
+          <p class="section-label">Archive Meta</p>
+          <h2>Archive Overview</h2>
           <p>
-            Short essays on post-training recipes, translation evaluation, multimodal capability building, and the engineering
-            decisions behind deployable research systems.
+            A formal, lightweight archive for technical essays and notes. The structure stays static, but the metadata model is
+            ready for future additions.
           </p>
-        </article>
-        <article class="blog-card">
-          <p class="blog-status">Coming Soon</p>
-          <h2>First entries</h2>
-          <p>
-            The initial structure is intentionally light: a stable landing page, shared site navigation, and room for future
-            notes, experiments, reading logs, and project write-ups.
-          </p>
-        </article>
+          <div class="archive-meta-group">
+            <p class="archive-meta-label">Year</p>
+            <div class="chip-grid">
+              <span class="topic-chip">2026</span>
+            </div>
+          </div>
+          <div class="archive-meta-group">
+            <p class="archive-meta-label">Format</p>
+            <div class="chip-grid">
+              <span class="topic-chip">Essay</span>
+            </div>
+          </div>
+          <div class="archive-meta-group">
+            <p class="archive-meta-label">Topic</p>
+            <div class="chip-grid">
+              <span class="topic-chip">Models</span>
+              <span class="topic-chip">Reasoning</span>
+              <span class="topic-chip">Systems</span>
+            </div>
+          </div>
+          <div class="archive-meta-group">
+            <p class="archive-meta-label">Count</p>
+            <div class="chip-grid">
+              <span class="topic-chip">1 post</span>
+              <span class="topic-chip">1 essay</span>
+              <span class="topic-chip">3 topics</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="archive-list">
+          <p class="section-label">Archive List</p>
+          <section class="archive-year-group" data-year="2026">
+            <div class="archive-year-head">
+              <h2>2026</h2>
+              <p>One long-form essay currently anchors the archive.</p>
+            </div>
+            <article class="blog-card archive-card">
+              <div class="archive-card-head">
+                <p class="blog-status">Essay</p>
+                <p class="archive-date">March 20, 2026</p>
+              </div>
+              <h3>AI and the God Model</h3>
+              <p>
+                A long-form essay on tokenization, latent variables, verifier-guided search, and where the real capability
+                boundaries of large models are likely to appear.
+              </p>
+              <div class="chip-grid archive-topics">
+                <span class="topic-chip">Models</span>
+                <span class="topic-chip">Reasoning</span>
+                <span class="topic-chip">Systems</span>
+              </div>
+              <p class="blog-card-link"><a href="blog-ai-and-god-boundary.html">Read the article</a></p>
+            </article>
+          </section>
+        </div>
       </div>
     </section>
   </main>

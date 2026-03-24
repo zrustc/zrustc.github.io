@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An essay on tokenization, latent variables, verification, and the capability boundaries of large models.">
+  <title>AI and the God Model | Zhirui Zhang</title>
+  <link rel="shortcut icon" href="Files/1.ico">
+  <link rel="stylesheet" href="Files/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-shell">
+      <a class="brandmark" href="index.html">Zhirui Zhang</a>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="primary-nav">
+        Menu
+      </button>
+      <nav id="primary-nav" class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#research-areas">Research</a>
+        <a href="index.html#selected-work">Selected Work</a>
+        <a href="publications.html">Publications</a>
+        <a href="blog.html">Blog</a>
+        <a href="Files/zhirui_20260319.pdf">Resume</a>
+      </nav>
+    </div>
+  </header>
+  <main class="page-shell publications-shell essay-shell">
+    <article class="essay-article">
+      <section class="section-block essay-hero">
+        <p class="section-label">Essay</p>
+        <h1 class="page-title">AI and the God Model: Where Are the Capability Boundaries of Large Models?</h1>
+        <p class="lede">
+          A distributional view of large models: tokenization as interface, pretraining as world-projection compression,
+          post-training as better latent-variable inference, and the real bottlenecks that still define model capability.
+        </p>
+        <div class="essay-meta">
+          <span class="metric-pill">March 20, 2026</span>
+          <span class="metric-pill">English Translation</span>
+          <span class="metric-pill">Models / Reasoning / Systems</span>
+        </div>
+        <div class="hero-links">
+          <a class="primary-link" href="blog.html">Back to Blog</a>
+          <a class="secondary-link" href="index.html">Home</a>
+        </div>
+      </section>
+
+      <section class="section-block essay-body">
+        <h2>Prelude: If a God Model Existed</h2>
+        <p>
+          Suppose a “God model” existed. It would not be some mystical network, nor a myth of machine omniscience, but a
+          theoretical limit object: a model that exactly captures the joint distribution of everything in the world that is
+          observable and encodable. If we encode any object as a sequence and denote it by <code>x</code>, then the model
+          corresponds to the true distribution <code>p*(x)</code>.
+        </p>
+        <pre class="equation-block">x ~ p*(x)</pre>
+        <p>
+          If that distribution were fully known, three consequences would follow. It could predict, generate, and compress.
+          Given any partial observation <code>x&lt;t</code>, it would know which next token is most probable. Generation would
+          simply be sampling from the distribution. The optimal code length would be governed by Shannon entropy
+          (<a href="https://www.mpi.nl/publications/item2383162/mathematical-theory-communication">Shannon, 1948</a>):
+        </p>
+        <pre class="equation-block">H(X) = -Σ_x p*(x) log p*(x)</pre>
+        <p>
+          This is the starting point of the essay: prediction, generation, and compression can all be unified as one problem,
+          namely approximating the true distribution. From this angle, what is interesting about large models is not merely
+          that they can speak, but that they may be approaching this “God distribution” through an engineering process.
+        </p>
+        <p>
+          A caveat is necessary. The real world may not correspond to a single fixed <code>p(x)</code>. A more realistic
+          description is often <code>p_t(x)</code>, because distributions drift and deployed systems in turn reshape the world.
+          In this essay, then, the God model is a thought experiment rather than a directly solvable object.
+        </p>
+
+        <h2>Why the World Can Be Tokenized</h2>
+        <p>
+          “Everything can be tokenized” is easy to misunderstand as “the world is fundamentally made of text.” That is plainly
+          false. A more precise claim is this: many of the objects we care about can be constructed as discretely representable,
+          compositionally modelable symbol sequences.
+        </p>
+        <p>
+          Text is the clearest case. BPE and subword methods show that a sentence does not need to be segmented at the word
+          level; the model can instead learn more useful discrete units from statistics
+          (<a href="https://aclanthology.org/P16-1162/">Sennrich et al., 2016</a>). SentencePiece goes further and makes explicit
+          that the token itself is an algorithmic design choice
+          (<a href="https://arxiv.org/abs/1808.06226">Kudo and Richardson, 2018</a>).
+        </p>
+        <p>
+          Images admit the same treatment. Vision Transformer turns an image into a sequence of patches
+          (<a href="https://arxiv.org/abs/2010.11929">Dosovitskiy et al., 2020</a>). Another line of work uses discrete latent
+          codes, as in VQ-VAE: continuous signals are first mapped into a discrete codebook and then modeled in token space
+          (<a href="https://arxiv.org/abs/1711.00937">van den Oord et al., 2017</a>). Video pushes the problem further, since the
+          tokenizer must preserve both spatial detail and temporal continuity; MAGVIT-style systems are examples of that effort
+          (<a href="https://arxiv.org/abs/2310.05737">Yu et al., 2024</a>). For autoregressive models, one requirement matters
+          especially: the token sequence should preserve causal temporal structure as much as possible. Otherwise, “predicting
+          the future from the past” becomes unstable at the representation level.
+        </p>
+        <p>
+          So the key idea is not that the world resembles text, but that once an object can be encoded stably into a finite set
+          of discrete units, a model can define probabilities over those units, search over them, compress them, and reason over
+          them. Tokens are the interface layer between AI and the world.
+        </p>
+
+        <h2>Tokenization Is Structure-Preserving Compression</h2>
+        <p>
+          Tokenization is not mere chopping. Its objective is to preserve the statistical structure most relevant to downstream
+          modeling under finite compute and context budgets.
+        </p>
+        <p>
+          In text, tokenization balances frequency, compositionality, and sequence length. Image patches are a coarse discrete
+          summary of local spatial structure. VQ-VAE-style discrete latents balance reconstruction quality against codebook
+          efficiency. Video tokenization must additionally handle temporal redundancy. These approaches differ in form, but not
+          in aim: under a limited token budget, preserve as much information density as possible
+          (<a href="https://arxiv.org/abs/1711.00937">van den Oord et al., 2017</a>;
+          <a href="https://arxiv.org/abs/2310.05737">Yu et al., 2024</a>).
+        </p>
+        <p>
+          A more careful statement, then, is not that tokenization is lossless, but that it should be nearly lossless for the
+          target task, or at least preserve sufficient statistics for the objective. For a chat model, losing sensor-level detail
+          may be harmless. For robotics, the same loss may be fatal.
+        </p>
+        <p>
+          This is also why the tokenizer often sets the model ceiling. The model can only learn structure inside the discrete
+          world it is given. If the crucial structure has already been flattened during tokenization, scaling parameters later
+          only fits the wrong representation more accurately.
+        </p>
+
+        <h2>How Large Models Approximate the Joint Distribution of the World</h2>
+        <p>
+          Once objects are tokenized, the training objective becomes strikingly uniform. For a sequence
+          <code>x = (x_1, ..., x_T)</code>, an autoregressive model learns:
+        </p>
+        <pre class="equation-block">p_θ(x) = Π_(t=1)^T p_θ(x_t | x_&lt;t)</pre>
+        <p>
+          This is just the chain rule of probability, but it reveals something important: what looks like next-token prediction
+          is, in substance, the approximation of a high-dimensional joint distribution through a sequence of conditional
+          distributions. That is the common substrate that now extends language modeling into code, images, video, and action
+          trajectories (<a href="https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf">Bengio et al., 2003</a>).
+        </p>
+        <p>
+          The problem is that the internet records only part of the world. We see papers, code, answers, images, videos, and
+          decisions, but we usually do not see the full search process, the failed attempts, or the environmental feedback that
+          produced them. In other words, we often observe the result <code>x</code> while missing many of the intermediate
+          variables <code>z</code> that helped determine it.
+        </p>
+        <p>
+          A more realistic formulation therefore acknowledges a latent-variable layer:
+        </p>
+        <pre class="equation-block">p(x) = Σ_z p(z) p(x | z)</pre>
+        <p>
+          Here <code>z</code> may represent many things: intermediate derivations in problem solving, exploration traces in task
+          execution, or even preferences and constraints that were never made explicit in text. Without those variables, internet
+          data is closer to a projection of the world’s surface than to the world itself. Seen this way, explicit Chain-of-Thought
+          or process supervision can be understood as attempts to force a partly hidden <code>z</code> back into the observable
+          sequence <code>x</code>.
+        </p>
+        <p>
+          Large models, then, do not directly learn “the world itself.” They use massive amounts of observable structure to
+          approximate a joint distribution whose latent variables have been partially folded away.
+        </p>
+
+        <h2>Latent Variables, the VAE Lens, and the Intuition of Generalized EM</h2>
+        <p>
+          This is why I think present-day large-model training can be viewed, cautiously, as a form of latent-variable learning.
+          The point is not to force LLMs into an existing model class, but to adopt an analytical lens that clarifies the
+          structure. The mapping is heuristic, not a strict equivalence.
+        </p>
+        <p>
+          VAE is useful here because it offers the simplest framework for a familiar situation: we observe outcomes, but not the
+          full process that generated them. Its value is not that “an LLM is a VAE,” but that it expresses the relationship
+          between outcomes and hidden causes in a particularly clean way.
+        </p>
+        <p>
+          Put plainly, a VAE can be read as two steps. First, infer a compact hidden explanation <code>z</code> from the observed
+          result <code>x</code>. Second, regenerate or reconstruct <code>x</code> from that <code>z</code>. In this essay’s terms:
+          first hypothesize the hidden structure, then reconstruct the observed phenomenon from it.
+        </p>
+        <p>
+          If the intermediate process behind a strong answer is treated as a latent variable, then capability improvement depends
+          not only on a stronger generator, but on whether the model is becoming better at modeling high-value regions of latent
+          space. In variational form, this corresponds to the ELBO
+          (<a href="https://arxiv.org/abs/1312.6114">Kingma and Welling, 2013</a>):
+        </p>
+        <pre class="equation-block">log p(x) ≥ E_[q_φ(z | x)] [log p_θ(x | z)] - D_KL(q_φ(z | x) || p(z))</pre>
+        <p>
+          Translated into the large-model setting, the point is not that an LLM literally optimizes this exact objective, but
+          that the decomposition is suggestive:
+        </p>
+        <p>
+          Pretraining resembles learning an implementable approximation to both a prior over latent variables <code>p(z)</code>
+          and a conditional distribution that maps those latent variables to outcomes <code>p(x | z)</code>. Post-training, in
+          turn, resembles improving an inference distribution, call it <code>q_φ(z | x, c)</code>, that maps task and context
+          into better latent explanations. The practical effect is that, given context <code>c</code>, the system more reliably
+          enters latent regions that lead to high-quality results.
+        </p>
+        <p>
+          This <code>q_φ</code> need not exist as a separate explicit module. It may instead appear as policy rewriting, search
+          preference, reasoning templates, preference models, process reward models, or an internal bias about where exploration
+          should continue. The stronger system is the one that hits good <code>z</code> more reliably.
+        </p>
+        <p>
+          Under more idealized assumptions, the process also carries the flavor of generalized EM
+          (<a href="https://academic.oup.com/jrsssb/article/39/1/1/7027539">Dempster et al., 1977</a>). One can first use the
+          current model together with a verifier to search for better latent assignments, then write those trajectories back into
+          the parameters:
+        </p>
+        <pre class="equation-block">q^(k)(z | x, c) ≈ Search_(θ_k, V)(z)
+θ_(k+1) ← arg max_θ E_[q^(k)] [log p_θ(x, z | c)]</pre>
+        <p>
+          In the textbook EM setting, exact E-steps and exact M-steps guarantee that the incomplete-data log-likelihood does not
+          decrease; generalized EM preserves a weaker monotonic-improvement intuition as long as each iteration improves the
+          auxiliary objective. Real large-model training is not that clean: optimization is non-convex, search is approximate,
+          rewards are noisy, sampling is finite, and distributions drift. Still, the lens offers a compelling intuition. If each
+          round finds high-quality latent variables more reliably and then writes those trajectories back into training, then
+          capability gains are not just accidental improvements in answer quality; they admit an iterative algorithmic
+          interpretation. Put more intuitively: the system first finds occasionally successful paths through large-scale trial and
+          error, then gradually consolidates those paths into stable “muscle memory.”
+        </p>
+        <p>
+          The value of the EM perspective is not that it replaces existing training details, but that it helps explain why
+          capability growth often means becoming better at guessing the right intermediate process, rather than merely mimicking
+          the final sentence.
+        </p>
+
+        <h2>Why RL, Synthetic Data, and Distillation Keep Working</h2>
+        <p>
+          If the perspective above is directionally right, then the effectiveness of reinforcement learning becomes much easier to
+          explain. For a tokenized task with a verifiable objective, as long as the correct solution remains inside the model’s
+          support and the probability of hitting it in one sample is <code>p &gt; 0</code>, then the probability of seeing at
+          least one correct sample after <code>n</code> draws is:
+        </p>
+        <pre class="equation-block">1 - (1 - p)^n</pre>
+        <p>
+          The equation is simple, but it captures the core dynamics behind many current post-training techniques. If:
+        </p>
+        <ul>
+          <li>the correct answer has not been excluded by the tokenizer or the model support;</li>
+          <li>the model assigns it non-zero probability; and</li>
+          <li>we can tell which candidate is better,</li>
+        </ul>
+        <p>
+          then best-of-<em>n</em>, rejection sampling, verifier-guided search, RL rollouts, and process supervision all push
+          probability mass toward the right region. InstructGPT shows how human feedback can systematically rewrite the output
+          distribution (<a href="https://arxiv.org/abs/2203.02155">Ouyang et al., 2022</a>). Process supervision shows that, in
+          verifiable domains such as mathematics, reward can be attached to the quality of intermediate steps
+          (<a href="https://cdn.openai.com/improving-mathematical-reasoning-with-process-supervision/Lets_Verify_Step_by_Step.pdf">OpenAI, 2023</a>).
+        </p>
+        <p>
+          The same lens explains why data produced by one generation of models can make the next generation stronger. The key is
+          not that “a model feeds itself,” but that the training distribution is reweighted:
+        </p>
+        <pre class="equation-block">q_k(x | c) ∝ p_(θ_k)(x | c) w(x, c)</pre>
+        <p>
+          Here <code>w(x, c)</code> is a weight supplied by a verifier, a reward model, execution feedback, human filtering, or
+          a teacher model. The next generation is not fitting the raw distribution of the previous model. It is fitting a better
+          posterior sample distribution exposed by search and filtering. STaR is fundamentally this idea
+          (<a href="https://arxiv.org/abs/2203.14465">Zelikman et al., 2022</a>).
+        </p>
+        <p>
+          That is why synthetic data can work. The mechanism is not that self-bootstrapping is automatically safe, but that it
+          transforms a distribution-copying problem into a distribution-reweighting problem. If the verifier is strong enough,
+          the search is wide enough, and real data still anchors the process, then the model learns structure that was previously
+          low-probability yet high-value.
+        </p>
+        <p>
+          Conversely, if one relies only on naked recursive sampling without a verifier, external signal, or real-data anchor,
+          the risks are clear: tail regions disappear, erroneous modes are amplified, and the system drifts toward model collapse
+          or mode forgetting, exactly the warning emphasized by “The Curse of Recursion”
+          (<a href="https://arxiv.org/abs/2305.17493">Shumailov et al., 2023</a>). So the right statement is not that synthetic
+          data never collapses, but that validated, filtered, and constrained synthetic data can keep producing gains, whereas
+          unconstrained self-feeding can absolutely collapse.
+        </p>
+        <p>
+          Distillation fits naturally into the same frame. It is not magic. It writes the teacher’s already-exposed high-value
+          distribution back into a cheaper student model. Classical knowledge distillation trains the student to match the
+          teacher’s output distribution (<a href="https://research.google/pubs/distilling-the-knowledge-in-a-neural-network/">Hinton et al., 2015</a>).
+          In the latent-variable framing here, one can read it as follows: the teacher is better at reaching good latent regions,
+          and distillation is a lower-cost way to copy that posterior bias, or that inference competence.
+        </p>
+
+        <h2>Where the Capability Boundaries of Large Models Really Are</h2>
+        <p>
+          At this point, a natural question follows: is the God model the destination? In theory, yes. In practice, far from it.
+        </p>
+        <p>
+          The first boundary is the boundary of informatization. Many crucial variables never enter the data at all. Human
+          exploration in real environments, embodied interaction, long-horizon feedback, and failed attempts are often not
+          recorded completely as tokens. What never enters tokens never enters the likelihood.
+        </p>
+        <p>
+          The second boundary is the boundary of verifiability. Post-training has progressed quickly in part because coding,
+          mathematics, search, and tool use admit deterministic comparison or at least relatively stable reward construction. That
+          shared property underlies the success of RLHF, process supervision, and self-training on certain tasks
+          (<a href="https://arxiv.org/abs/2203.02155">Ouyang et al., 2022</a>;
+          <a href="https://cdn.openai.com/improving-mathematical-reasoning-with-process-supervision/Lets_Verify_Step_by_Step.pdf">OpenAI, 2023</a>;
+          <a href="https://arxiv.org/abs/2203.14465">Zelikman et al., 2022</a>). In open-ended creation, long-term strategy, or
+          complex social coordination, the verifier is often unclear, unstable, or prohibitively expensive. Even when a reward or
+          preference model exists, another risk appears: as the model moves outside the verifier’s training distribution, the
+          verification signal itself drifts and can even induce reward hacking. Without a trustworthy verification loop, the
+          efficiency of the whole “sample, select, and write back” pipeline drops sharply.
+        </p>
+        <p>
+          The third boundary is the boundary of search. A correct solution existing inside the support set does not imply that
+          the system can find it efficiently. When good <code>z</code> regions are too diffuse, too low-probability, too
+          long-horizon, or buried in a search tree that is too deep, solutions that exist in theory become unreachable in
+          engineering practice. Many capability boundaries are not cases where “the model does not know,” but cases where “the
+          model cannot find.”
+        </p>
+        <p>
+          The fourth boundary is the boundary of distributional stability. The real world is not a static dataset. The more
+          faithful object is <code>p_t(x)</code>, not a fixed <code>p(x)</code>. Once models begin to influence markets, public
+          discourse, code repositories, educational materials, and human behavior itself, the training target co-evolves with the
+          deployment target. “Approximating the true distribution” then stops being a one-shot problem and becomes a moving
+          target.
+        </p>
+        <p>
+          So the limiting object of this paradigm can indeed be imagined as a God model: if we could observe everything, tokenize
+          everything, preserve enough statistical structure, and run unbounded search and verification over a stable world, model
+          capability would approach that limit distribution. But what blocks progress in reality is often not raw parameter count.
+          It is how many crucial variables still fail to enter tokens, how many tasks still lack reliable verifiers, how many
+          correct solutions remain unreachable by search, and how stable the world itself remains.
+        </p>
+
+        <h2>Closing</h2>
+        <p>
+          I increasingly prefer to think of large models as machines for approximating joint distributions.
+        </p>
+        <p>
+          Pretraining is not just memorizing corpora; it compresses some projection of the world through massive observable
+          structure. Post-training is not just teaching manners; it reshapes the model’s ability to enter high-value latent
+          regions. The common success of reinforcement learning, synthetic data, and distillation is not accidental either. All
+          three mechanisms are doing the same basic thing: making sparse, low-probability, high-value structure more explicit and
+          then writing it back into the model.
+        </p>
+        <p>
+          Seen from that angle, the capability boundaries of large models may not be primarily about whether models can keep
+          getting bigger. They are more likely to be about how much of the world has not yet been informatized, how many tasks
+          still cannot form a reliable verification loop, and how many correct solutions remain inaccessible to engineering
+          search. That seems closer to the real bottleneck of the next phase of AI competition than arguments about parameter
+          count, context length, or even architecture alone.
+        </p>
+
+        <h2>References</h2>
+        <ul class="reference-list">
+          <li><a href="https://www.mpi.nl/publications/item2383162/mathematical-theory-communication">Shannon, 1948. A Mathematical Theory of Communication</a></li>
+          <li><a href="https://aclanthology.org/P16-1162/">Sennrich et al., 2016. Neural Machine Translation of Rare Words with Subword Units</a></li>
+          <li><a href="https://arxiv.org/abs/1808.06226">Kudo and Richardson, 2018. SentencePiece</a></li>
+          <li><a href="https://arxiv.org/abs/2010.11929">Dosovitskiy et al., 2020. An Image is Worth 16x16 Words</a></li>
+          <li><a href="https://arxiv.org/abs/1711.00937">van den Oord et al., 2017. Neural Discrete Representation Learning</a></li>
+          <li><a href="https://arxiv.org/abs/2310.05737">Yu et al., 2024. Language Model Beats Diffusion: Tokenizer Is Key to Visual Generation</a></li>
+          <li><a href="https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf">Bengio et al., 2003. A Neural Probabilistic Language Model</a></li>
+          <li><a href="https://arxiv.org/abs/1312.6114">Kingma and Welling, 2013. Auto-Encoding Variational Bayes</a></li>
+          <li><a href="https://academic.oup.com/jrsssb/article/39/1/1/7027539">Dempster et al., 1977. Maximum Likelihood from Incomplete Data via the EM Algorithm</a></li>
+          <li><a href="https://arxiv.org/abs/2203.02155">Ouyang et al., 2022. Training Language Models to Follow Instructions with Human Feedback</a></li>
+          <li><a href="https://cdn.openai.com/improving-mathematical-reasoning-with-process-supervision/Lets_Verify_Step_by_Step.pdf">OpenAI, 2023. Let&apos;s Verify Step by Step</a></li>
+          <li><a href="https://arxiv.org/abs/2203.14465">Zelikman et al., 2022. STaR: Bootstrapping Reasoning With Reasoning</a></li>
+          <li><a href="https://arxiv.org/abs/2305.17493">Shumailov et al., 2023. The Curse of Recursion: Training on Generated Data Makes Models Forget</a></li>
+          <li><a href="https://research.google/pubs/distilling-the-knowledge-in-a-neural-network/">Hinton et al., 2015. Distilling the Knowledge in a Neural Network</a></li>
+        </ul>
+      </section>
+    </article>
+  </main>
+  <script src="Files/site.js"></script>
+</body>
+</html>

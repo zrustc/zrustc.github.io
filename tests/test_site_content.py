@@ -118,6 +118,41 @@ class SiteStructureTests(unittest.TestCase):
         self.assertIn("data-nav-toggle", blog)
         self.assertIn('src="Files/site.js"', blog)
 
+    def test_blog_page_links_to_real_article(self) -> None:
+        blog = read_text("blog.html")
+        self.assertIn('href="blog-ai-and-god-boundary.html"', blog)
+        self.assertIn("AI and the God Model", blog)
+
+        article = read_text("blog-ai-and-god-boundary.html")
+        self.assertIn("<title>AI and the God Model | Zhirui Zhang</title>", article)
+        self.assertIn("Where Are the Capability Boundaries of Large Models?", article)
+        self.assertIn('class="site-nav"', article)
+        self.assertIn("data-nav-toggle", article)
+        self.assertIn('src="Files/site.js"', article)
+
+    def test_blog_archive_exposes_metadata_and_year_group(self) -> None:
+        blog = read_text("blog.html")
+        for marker in [
+            'class="archive-meta"',
+            'class="archive-list"',
+            'class="archive-year-group"',
+            'data-year="2026"',
+            "Archive Meta",
+            "Archive List",
+            "Year",
+            "Format",
+            "Topic",
+            "Count",
+            "2026",
+            "Essay",
+            "Models",
+            "Reasoning",
+            "Systems",
+            "1 post",
+            'href="blog-ai-and-god-boundary.html"',
+        ]:
+            self.assertIn(marker, blog)
+
     def test_publications_page_includes_more_older_work(self) -> None:
         html = read_text("publications.html")
         for year in ["2022", "2021", "2020", "2019", "2018"]:
